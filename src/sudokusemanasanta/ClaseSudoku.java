@@ -77,7 +77,6 @@ public class ClaseSudoku {
      * @param numero el numero elegido
      * @return
      */
-
     public void cambiar(int fila, int columna, int elemento) {
         if (Insertar(fila, columna, elemento) == true) {
             lista.get(fila - 1).set(columna - 1, elemento);
@@ -195,4 +194,7 @@ public class ClaseSudoku {
 
     }
 
+    public void eliminar(int fila, int columna) {
+        lista.get(fila - 1).set(columna - 1, 0);
+    }
 }
