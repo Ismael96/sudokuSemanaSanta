@@ -16,7 +16,7 @@ public class SudokuSemanaSanta {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SudokuException {
       {
 
         ClaseSudoku sudoku = new ClaseSudoku();
@@ -27,7 +27,7 @@ public class SudokuSemanaSanta {
 
         do {
 
-            System.out.println("1. Iniciar/Reiniciar sudoku\n" + "2. Realizar movimiento\n"+ "3. Vaciar casilla \n"+ "4. Mostrar sudoku\n"+ "5.Reiniciar\n"+ "6. Salir");
+            System.out.println("1. Iniciar/Reiniciar sudoku\n" + "2. Mostrar sudoku\n"+ "3. Vaciar casilla \n"+ "4. Realizar movimiento\n"+ "5.Reiniciar\n"+ "6. Salir");
 
             numero2 = teclado.nextInt();
 
@@ -36,6 +36,21 @@ public class SudokuSemanaSanta {
             }
 
             if (numero2 == 2) {
+                System.out.println(sudoku.toString());
+                
+            }
+
+            if (numero2 == 3) {
+                System.out.println("Dime las coordenadas de la casilla que quieres vaciar:");
+                System.out.println("Fila: ");
+                int fila = teclado.nextInt();
+                System.out.println("Columna:");
+                int columna = teclado.nextInt();
+
+                sudoku.eliminar(fila, columna);
+            }
+
+            if (numero2 == 4) {
                 System.out.println("*********************************************************************");
 
                 System.out.println("Indica la fila: ");
@@ -50,20 +65,6 @@ public class SudokuSemanaSanta {
                 
                 System.out.println(sudoku.toString());
             }
-
-            if (numero2 == 3) {
-                System.out.println("Dime las coordenadas de la casilla que quieres vaciar:");
-                System.out.println("Fila: ");
-                int fila = teclado.nextInt();
-                System.out.println("Columna:");
-                int columna = teclado.nextInt();
-
-                sudoku.eliminar(fila, columna);
-            }
-
-            if (numero2 == 4) {
-                System.out.println(sudoku.toString());
-            }
             if (numero2 == 5) {
                 sudoku.CrearyEmpezar();
                 
@@ -74,7 +75,7 @@ public class SudokuSemanaSanta {
                 System.out.println("Has salido");
 
             }
-        } while (numero2 <= 6);
+        } while (numero2 < 6);
 
     }
 }
