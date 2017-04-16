@@ -21,51 +21,21 @@ public class ClaseSudoku {
     private Random aleatorio;
 
     /**
-     * Este metodo crea el sudoku y lo muestra
+     * comprueba si se puede poner el numero en las coordenadas indicadas
      *
-     * @return el juego
+     * @param fila la fila
+     * @param columna la columna
+     * @param numero
+     * @return
      */
-    public String CrearyEmpezar() {
-        lista = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            ArrayList<Integer> a = new ArrayList<>();
-            for (int j = 0; j < 9; j++) {
-                a.add(0);
+    private boolean Insertar(int fila, int columna, int numero) {
+        {
+            boolean resultado = false;
+            if (fila(fila, numero) == true && columna(columna, numero) == true && grupo(fila, columna, numero) == true) {
+                resultado = true;
             }
-
-            lista.add(a);
+            return resultado;
         }
-
-        aleatorio = new Random();
-
-        int contador = 0;
-
-        for (; contador < 24;) {
-            int n_ramdon = aleatorio.nextInt(9 - 1) + 1;
-
-            int horizontal = aleatorio.nextInt(9 - 1) + 1;
-
-            int vertical = aleatorio.nextInt(9 - 1) + 1;
-
-            if (Insertar(horizontal, vertical, n_ramdon) == true) {
-                cambiar(horizontal, vertical, n_ramdon);
-            }
-            contador++;
-        }
-        String cuerpo = "";
-        for (int i = 0; i < lista.size(); i++) {
-
-            for (int j = 0; j < 9; j++) {
-
-                int numero_anadir = lista.get(i).get(j);
-                cuerpo += numero_anadir + " ";
-            }
-            cuerpo += "\n";
-
-        }
-
-        System.out.println(cuerpo);
-        return cuerpo;
     }
 
     /**
@@ -77,9 +47,13 @@ public class ClaseSudoku {
      * @param numero el numero elegido
      * @return
      */
-    public void cambiar(int fila, int columna, int elemento) {
-        if (Insertar(fila, columna, elemento) == true) {
-            lista.get(fila - 1).set(columna - 1, elemento);
+    public void cambiar(int fila, int columna, int numero) {
+        if (Insertar(fila, columna, numero) == true) {
+
+            lista.get(fila - 1).set(columna - 1, numero);
+
+        } else {
+            System.out.println("Error no se puede insertar el número.");
         }
     }
 
@@ -91,7 +65,7 @@ public class ClaseSudoku {
      * @return si o no segun este o no
      */
     public boolean fila(int fila, int numero) {
-        boolean error = false;
+        boolean error = true;
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(fila - 1).get(i) == numero) {
                 error = false;
@@ -131,12 +105,28 @@ public class ClaseSudoku {
      * @return
      */
     private boolean grupo(int fila, int columna, int numero) {
-
+        boolean error = true;
         int fila_h = 0;
         int columna_h = 0;
 
         int fila_v = 0;
         int columna_v = 0;
+
+        if (fila >= 0 && fila <= 2) {
+            fila_h = 0;
+            columna_h = 2;
+
+        }
+        if (fila >= 3 && fila <= 5) {
+            fila_h = 3;
+            columna_h = 5;
+
+        }
+        if (fila >= 6 && fila <= 8) {
+            fila_h = 6;
+            columna_h = 8;
+
+        }
 
         if (columna >= 0 && columna <= 2) {
             fila_v = 0;
@@ -150,24 +140,13 @@ public class ClaseSudoku {
             fila_v = 6;
             columna_v = 8;
         }
-        if (fila >= 0 && fila <= 2) {
-            fila_h = 0;
-            columna_h = 2;
-        }
-        if (fila >= 3 && fila <= 5) {
-            fila_h = 3;
-            columna_h = 5;
-        }
-        if (fila >= 6 && fila <= 8) {
-            fila_h = 6;
-            columna_h = 8;
-        }
 
-        boolean error = true;
         for (int i = fila_h; i <= columna_h; i++) {
             for (int j = fila_v; j <= columna_v; j++) {
                 if (lista.get(i).get(j) == numero) {
+
                     error = false;
+
                 }
 
             }
@@ -177,28 +156,80 @@ public class ClaseSudoku {
     }
 
     /**
-     * comprueba si se puede poner el numero en las coordenadas indicadas
+     * Elinima un numero de la coordenadas dadas
      *
      * @param fila la fila
-     * @param columnala columna
-     * @param numero
-     * @return
+     * @param columna la columna
      */
-    private boolean Insertar(int fila, int columna, int numero) {
-
-        boolean resultado = false;
-        if (fila(fila, numero) == true && columna(columna, numero) == true && grupo(fila, columna, numero) == true) {
-            resultado = true;
-        }
-        return resultado;
-
-    }
-/**
- * Para eliminar un numero en especifico
- * @param fila la fila
- * @param columna la columna
- */
     public void eliminar(int fila, int columna) {
         lista.get(fila - 1).set(columna - 1, 0);
+    }
+/**
+ * Tablero del juego
+ * @return Tablero del juego
+ */
+    @Override
+    public String toString() {
+        String resultado = "";
+        for (int i = 0; i < lista.size(); i++) {
+
+            for (int j = 0; j < 9; j++) {
+
+                int n = lista.get(i).get(j);
+                resultado += n + " ";
+            }
+            resultado += "\n";
+
+        }
+
+        return resultado;
+    }
+
+    /**
+     * Este metodo crea el sudoku y lo muestra
+     *
+     * @return el juego
+     */
+    public String CrearyEmpezar() {
+        lista = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            ArrayList<Integer> a = new ArrayList<>();
+            for (int j = 0; j < 9; j++) {
+                a.add(0);
+            }
+
+            lista.add(a);
+        }
+
+        aleatorio = new Random();
+
+        int contador = 0;
+
+        for (; contador < 24;) {
+            int n_ramdon = aleatorio.nextInt(9 - 1) + 1;
+
+            int horizontal = aleatorio.nextInt(9 - 1) + 1;
+
+            int vertical = aleatorio.nextInt(9 - 1) + 1;
+
+            if (Insertar(horizontal, vertical, n_ramdon) == true) {
+                cambiar(horizontal, vertical, n_ramdon);
+            }
+            contador++;
+        }
+        String cuerpo = "";
+        for (int i = 0; i < lista.size(); i++) {
+
+            for (int j = 0; j < 9; j++) {
+
+                int n = lista.get(i).get(j);
+                cuerpo += n + " ";
+            }
+            cuerpo += "\n";
+
+        }
+
+        System.out.println(cuerpo);
+        return cuerpo;
     }
 }
