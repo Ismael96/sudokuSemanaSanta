@@ -193,7 +193,11 @@ public class ClaseSudoku {
         return resultado;
 
     }
-
+/**
+ * Para eliminar un numero en especifico
+ * @param fila la fila
+ * @param columna la columna
+ */
     public void eliminar(int fila, int columna) {
         lista.get(fila - 1).set(columna - 1, 0);
     }
