@@ -28,14 +28,14 @@ public class ClaseSudoku {
      * @param numero
      * @return
      */
-    private boolean Insertar(int fila, int columna, int numero) {
-        {
+    private boolean Insertar(int fila, int columna, int numero) throws SudokuException{
+        
             boolean resultado = false;
             if (fila(fila, numero) == true && columna(columna, numero) == true && grupo(fila, columna, numero) == true) {
                 resultado = true;
             }
             return resultado;
-        }
+        
     }
 
     /**
@@ -47,7 +47,7 @@ public class ClaseSudoku {
      * @param numero el numero elegido
      * @return
      */
-    public void cambiar(int fila, int columna, int numero) {
+    public void cambiar(int fila, int columna, int numero) throws SudokuException{
         if (Insertar(fila, columna, numero) == true) {
 
             lista.get(fila - 1).set(columna - 1, numero);
@@ -64,7 +64,7 @@ public class ClaseSudoku {
      * @param numero el numero que queremos poner
      * @return si o no segun este o no
      */
-    public boolean fila(int fila, int numero) {
+    public boolean fila(int fila, int numero) throws SudokuException{
         boolean error = true;
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(fila - 1).get(i) == numero) {
@@ -82,7 +82,7 @@ public class ClaseSudoku {
      * @param numero el numero que queremos poner
      * @return si o no segun este o no
      */
-    public boolean columna(int columna, int numero) {
+    public boolean columna(int columna, int numero) throws SudokuException {
         boolean error = true;
         for (int i = 0; i < lista.size(); i++) {
             for (ArrayList<Integer> lista1 : lista) {
@@ -104,7 +104,7 @@ public class ClaseSudoku {
      * @param numero
      * @return
      */
-    private boolean grupo(int fila, int columna, int numero) {
+    private boolean grupo(int fila, int columna, int numero) throws SudokuException{
         boolean error = true;
         int fila_h = 0;
         int columna_h = 0;
@@ -161,7 +161,7 @@ public class ClaseSudoku {
      * @param fila la fila
      * @param columna la columna
      */
-    public void eliminar(int fila, int columna) {
+    public void eliminar(int fila, int columna) throws SudokuException{
         lista.get(fila - 1).set(columna - 1, 0);
     }
 /**
@@ -190,7 +190,7 @@ public class ClaseSudoku {
      *
      * @return el juego
      */
-    public String CrearyEmpezar() {
+    public String CrearyEmpezar() throws SudokuException{
         lista = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             ArrayList<Integer> a = new ArrayList<>();
